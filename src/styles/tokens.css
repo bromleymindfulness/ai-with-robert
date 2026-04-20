@@ -1,16 +1,16 @@
 :root {
-  /* Base palette — light */
-  --accent: #3a6ea5;
-  --ink: #0b1620;
-  --paper: #eef1f4;
-  --panel: #ffffff;
+  /* Base palette — dark (the site default) */
+  --accent: #6fa3d9;
+  --ink: #e8edf3;
+  --paper: #0b1620;
+  --panel: #111e2c;
 
   /* Typography */
   --display: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
   --sans: "Geist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
-  /* Semantic tokens derived from --ink — flip automatically in dark mode */
+  /* Semantic tokens derived from --ink — flip automatically with palette */
   --muted: color-mix(in srgb, var(--ink) 55%, transparent);
   --subtle: color-mix(in srgb, var(--ink) 75%, transparent);
   --rule: color-mix(in srgb, var(--ink) 13%, transparent);
@@ -26,21 +26,10 @@
   --inv-placeholder: color-mix(in srgb, var(--paper) 45%, transparent);
   --inv-stripe: color-mix(in srgb, var(--paper) 3%, transparent);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
-/* System-preference fallback when no explicit theme is set */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --accent: #6fa3d9;
-    --ink: #e8edf3;
-    --paper: #0b1620;
-    --panel: #111e2c;
-    color-scheme: dark;
-  }
-}
-
-/* Explicit user overrides — higher specificity than the media query */
+/* Explicit user override — light */
 :root[data-theme="light"] {
   --accent: #3a6ea5;
   --ink: #0b1620;
@@ -49,6 +38,7 @@
   color-scheme: light;
 }
 
+/* Explicit user override — dark (same as base; kept for symmetry) */
 :root[data-theme="dark"] {
   --accent: #6fa3d9;
   --ink: #e8edf3;

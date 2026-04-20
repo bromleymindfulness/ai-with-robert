@@ -166,15 +166,16 @@ const live = site.live.on;
     border-color: var(--ink);
   }
 
-  /* Show only the label matching the NEXT theme (what you'll switch to) */
-  .lbl-light {
+  /* Show only the label matching the NEXT theme (what you'll switch to).
+     Dark is the default, so by default we show "Light". */
+  .lbl-dark {
     display: none;
   }
-  :global(:root[data-theme="dark"]) .lbl-dark {
-    display: none;
-  }
-  :global(:root[data-theme="dark"]) .lbl-light {
+  :global(:root[data-theme="light"]) .lbl-dark {
     display: inline;
+  }
+  :global(:root[data-theme="light"]) .lbl-light {
+    display: none;
   }
 
   .mobile-menu {
@@ -225,7 +226,8 @@ const live = site.live.on;
 
   const themeBtn = document.querySelector<HTMLButtonElement>('.theme-toggle');
   themeBtn?.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') ?? 'light';
+    // Dark is the site default, so "no attribute" means dark
+    const current = document.documentElement.getAttribute('data-theme') ?? 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     try {
@@ -233,16 +235,5 @@ const live = site.live.on;
     } catch {
       /* storage blocked — session-only theme */
     }
-  });
-
-  // Keep open tabs in sync when the system preference changes and there's no override
-  const media = matchMedia('(prefers-color-scheme: dark)');
-  media.addEventListener?.('change', (e) => {
-    try {
-      if (localStorage.getItem('rm-theme')) return;
-    } catch {
-      return;
-    }
-    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
   });
 </script>

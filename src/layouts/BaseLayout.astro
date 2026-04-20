@@ -6,9 +6,9 @@ import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 
 // Inline flash-prevention script — runs synchronously in <head> before
-// any body paint. Reads user's saved theme or prefers-color-scheme and
-// stamps data-theme on <html> so the right palette is applied first frame.
-const themeInit = `(function(){try{var s=localStorage.getItem('rm-theme');var t=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
+// any body paint. Applies the user's saved theme (if any); otherwise
+// dark is the site default and comes straight from tokens.css.
+const themeInit = `(function(){try{var s=localStorage.getItem('rm-theme');if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}})();`;
 
 interface Props {
   title?: string;

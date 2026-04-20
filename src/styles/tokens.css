@@ -1,13 +1,58 @@
 :root {
+  /* Base palette — light */
   --accent: #3a6ea5;
   --ink: #0b1620;
   --paper: #eef1f4;
   --panel: #ffffff;
-  --muted: rgba(11, 22, 32, 0.55);
-  --subtle: rgba(11, 22, 32, 0.75);
-  --rule: rgba(11, 22, 32, 0.13);
-  --hairline: rgba(11, 22, 32, 0.07);
+
+  /* Typography */
   --display: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
   --sans: "Geist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Semantic tokens derived from --ink — flip automatically in dark mode */
+  --muted: color-mix(in srgb, var(--ink) 55%, transparent);
+  --subtle: color-mix(in srgb, var(--ink) 75%, transparent);
+  --rule: color-mix(in srgb, var(--ink) 13%, transparent);
+  --hairline: color-mix(in srgb, var(--ink) 7%, transparent);
+  --placeholder: color-mix(in srgb, var(--ink) 35%, transparent);
+  --panel-stripe: color-mix(in srgb, var(--ink) 5%, transparent);
+
+  /* Inverted block (ink bg, paper text) — works in both modes because
+     --ink and --paper both flip together */
+  --inv-muted: color-mix(in srgb, var(--paper) 60%, transparent);
+  --inv-subtle: color-mix(in srgb, var(--paper) 75%, transparent);
+  --inv-rule: color-mix(in srgb, var(--paper) 30%, transparent);
+  --inv-placeholder: color-mix(in srgb, var(--paper) 45%, transparent);
+  --inv-stripe: color-mix(in srgb, var(--paper) 3%, transparent);
+
+  color-scheme: light;
+}
+
+/* System-preference fallback when no explicit theme is set */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #6fa3d9;
+    --ink: #e8edf3;
+    --paper: #0b1620;
+    --panel: #111e2c;
+    color-scheme: dark;
+  }
+}
+
+/* Explicit user overrides — higher specificity than the media query */
+:root[data-theme="light"] {
+  --accent: #3a6ea5;
+  --ink: #0b1620;
+  --paper: #eef1f4;
+  --panel: #ffffff;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --accent: #6fa3d9;
+  --ink: #e8edf3;
+  --paper: #0b1620;
+  --panel: #111e2c;
+  color-scheme: dark;
 }

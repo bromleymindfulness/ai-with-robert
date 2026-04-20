@@ -5,6 +5,11 @@ import { site } from '../site.config';
 import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 
+// Inline flash-prevention script — runs synchronously in <head> before
+// any body paint. Reads user's saved theme or prefers-color-scheme and
+// stamps data-theme on <html> so the right palette is applied first frame.
+const themeInit = `(function(){try{var s=localStorage.getItem('rm-theme');var t=s||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
+
 interface Props {
   title?: string;
   description?: string;
@@ -24,6 +29,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString()
 <!doctype html>
 <html lang="en">
   <head>
+    <script is:inline set:html={themeInit} />
     <meta charset="utf-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />

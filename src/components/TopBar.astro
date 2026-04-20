@@ -34,14 +34,26 @@ const live = site.live.on;
       ))}
     </nav>
 
-    <button
-      class="rm-mobile-toggle mtoggle"
-      type="button"
-      aria-expanded="false"
-      aria-controls="rm-mobile-menu"
-    >
-      Menu
-    </button>
+    <div class="actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle colour theme"
+        title="Toggle colour theme"
+      >
+        <span class="lbl lbl-dark">Dark</span>
+        <span class="lbl lbl-light">Light</span>
+      </button>
+
+      <button
+        class="rm-mobile-toggle mtoggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="rm-mobile-menu"
+      >
+        Menu
+      </button>
+    </div>
   </div>
 
   <div id="rm-mobile-menu" class="mobile-menu" hidden>
@@ -88,6 +100,7 @@ const live = site.live.on;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
   }
 
   .brand {
@@ -128,6 +141,13 @@ const live = site.live.on;
     border-bottom-color: var(--accent);
   }
 
+  .actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .theme-toggle,
   .mtoggle {
     background: transparent;
     border: 1px solid var(--rule);
@@ -139,6 +159,22 @@ const live = site.live.on;
     color: var(--ink);
     cursor: pointer;
     font-weight: 500;
+    transition: border-color 120ms, color 120ms;
+  }
+  .theme-toggle:hover,
+  .mtoggle:hover {
+    border-color: var(--ink);
+  }
+
+  /* Show only the label matching the NEXT theme (what you'll switch to) */
+  .lbl-light {
+    display: none;
+  }
+  :global(:root[data-theme="dark"]) .lbl-dark {
+    display: none;
+  }
+  :global(:root[data-theme="dark"]) .lbl-light {
+    display: inline;
   }
 
   .mobile-menu {
@@ -186,4 +222,27 @@ const live = site.live.on;
       }
     });
   }
+
+  const themeBtn = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  themeBtn?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') ?? 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try {
+      localStorage.setItem('rm-theme', next);
+    } catch {
+      /* storage blocked — session-only theme */
+    }
+  });
+
+  // Keep open tabs in sync when the system preference changes and there's no override
+  const media = matchMedia('(prefers-color-scheme: dark)');
+  media.addEventListener?.('change', (e) => {
+    try {
+      if (localStorage.getItem('rm-theme')) return;
+    } catch {
+      return;
+    }
+    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  });
 </script>

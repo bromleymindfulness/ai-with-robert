@@ -18,8 +18,8 @@ const {
 ---
 <div class="nc">
   <div class="top">
-    <Tick color="rgba(255,255,255,0.6)">{eyebrow}</Tick>
-    {meta && <Tick color="rgba(255,255,255,0.6)">{meta}</Tick>}
+    <Tick color="var(--inv-muted)">{eyebrow}</Tick>
+    {meta && <Tick color="var(--inv-muted)">{meta}</Tick>}
   </div>
 
   <div class="headline" set:html={heading} />
@@ -96,7 +96,7 @@ const {
     min-width: 0;
   }
   input[type="email"]::placeholder {
-    color: rgba(238, 241, 244, 0.45);
+    color: var(--inv-placeholder);
   }
   button {
     border: none;

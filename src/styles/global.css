@@ -24,7 +24,7 @@ button {
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(11, 22, 32, 0.35);
+  color: var(--placeholder);
 }
 
 ::selection {

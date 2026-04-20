@@ -1,0 +1,145 @@
+---
+import Tick from './Tick.astro';
+---
+<form
+  class="cf"
+  name="contact"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action="/thanks/"
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hp"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+  <div class="field">
+    <label for="cf-name"><Tick>Name</Tick></label>
+    <input id="cf-name" type="text" name="name" required autocomplete="name" />
+  </div>
+
+  <div class="field">
+    <label for="cf-email"><Tick>Email</Tick></label>
+    <input id="cf-email" type="email" name="email" required autocomplete="email" />
+  </div>
+
+  <div class="field topic-field">
+    <Tick>Topic</Tick>
+    <div class="topics" role="radiogroup" aria-label="Topic">
+      <label class="chip">
+        <input type="radio" name="topic" value="training" checked />
+        <span>Training</span>
+      </label>
+      <label class="chip">
+        <input type="radio" name="topic" value="automation" />
+        <span>Automation</span>
+      </label>
+      <label class="chip">
+        <input type="radio" name="topic" value="other" />
+        <span>Other</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="field note-field">
+    <label for="cf-note" class="note-label"><Tick>Note</Tick></label>
+    <textarea
+      id="cf-note"
+      name="note"
+      rows="4"
+      required
+      minlength="5"
+      placeholder="What are you trying to automate?"
+    ></textarea>
+  </div>
+
+  <button type="submit" class="submit">Send message →</button>
+</form>
+
+<style>
+  .cf { display: block; }
+  .field {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+  .field input[type="text"],
+  .field input[type="email"] {
+    background: transparent;
+    border: none;
+    font-family: var(--sans);
+    font-size: 16px;
+    color: var(--ink);
+    outline: none;
+    padding: 0;
+    width: 100%;
+  }
+  .topic-field {
+    align-items: center;
+  }
+  .topics {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--rule);
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: background-color 120ms, color 120ms, border-color 120ms;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .chip:has(input:checked) {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .note-field {
+    display: block;
+  }
+  .note-label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    padding: 0;
+  }
+  .submit {
+    margin-top: 20px;
+    padding: 14px 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 500;
+  }
+  .submit:hover {
+    opacity: 0.92;
+  }
+</style>

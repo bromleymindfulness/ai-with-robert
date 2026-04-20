@@ -1,0 +1,13 @@
+:root {
+  --accent: #3a6ea5;
+  --ink: #0b1620;
+  --paper: #eef1f4;
+  --panel: #ffffff;
+  --muted: rgba(11, 22, 32, 0.55);
+  --subtle: rgba(11, 22, 32, 0.75);
+  --rule: rgba(11, 22, 32, 0.13);
+  --hairline: rgba(11, 22, 32, 0.07);
+  --display: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  --sans: "Geist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}

@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tick from '../components/Tick.astro';
+import TextLink from '../components/TextLink.astro';
+
+const services = [
+  {
+    k: 'A',
+    kind: 'Training',
+    title: 'AI Automation Training',
+    price: '£1,200 / cohort',
+    lede:
+      'A six-week, live-on-YouTube cohort. You leave with a working team of bots, deployed to your own Telegram.',
+    bullets: [
+      'Six 60-minute live classes',
+      'One-to-one review session',
+      'Private Telegram cohort group',
+      'Written versions of every class',
+      'Code, prompts, and server recipes',
+    ],
+  },
+  {
+    k: 'B',
+    kind: 'Automation',
+    title: 'AI Marketing Automation',
+    price: 'From £2,500 / mo',
+    lede:
+      'I deploy and operate a team of specialist bots — content, ads, SEO, email, analytics — inside your Telegram. You talk to them. They do the work.',
+    bullets: [
+      'Five to twenty bots, tuned to your business',
+      'Hosted on my Nanoclaw fleet',
+      'Weekly reporting inside Telegram',
+      'Monthly tuning & retraining',
+      'Cancel monthly, no contract',
+    ],
+  },
+];
+---
+<BaseLayout
+  pageKey="services"
+  title="Services — Training & AI Marketing Automation | Robert Mitchell"
+  description="Two streams, same stack. Live training cohort or done-for-you Telegram bot fleet."
+  screenLabel="02 Services"
+>
+  <section class="intro">
+    <Tick>Document / 002 / Services</Tick>
+    <h1 class="h1">Two streams.<br />Same stack.</h1>
+    <p class="sub">
+      Teach the team to build it, or let me run it for you. Either way, the deliverable is the same: a room full of specialist bots inside your Telegram.
+    </p>
+  </section>
+
+  <section class="stack">
+    {services.map((s, i) => (
+      <div class:list={["svc", { last: i === services.length - 1 }]}>
+        <div class="svc-key"><Tick color="var(--accent)">— {s.k}</Tick></div>
+        <div class="svc-body">
+          <div class="svc-meta">
+            <Tick>{s.kind}</Tick>
+            <Tick>{s.price}</Tick>
+          </div>
+          <h2 class="svc-title">{s.title}</h2>
+          <p class="svc-lede">{s.lede}</p>
+          <ul class="svc-bullets">
+            {s.bullets.map((b) => (
+              <li>
+                <span class="tick-mark">✓</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <TextLink color="var(--accent)" href="/contact/">
+            Enquire → {s.kind}
+          </TextLink>
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: clamp(48px, 8vw, 84px) clamp(20px, 4vw, 56px) clamp(28px, 4vw, 40px);
+  }
+  .intro :global(.tick) {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 5.5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .sub {
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.55;
+    color: var(--subtle);
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .stack {
+    padding: 0 clamp(20px, 4vw, 56px) clamp(40px, 7vw, 72px);
+  }
+  .svc {
+    border-top: 1px solid var(--rule);
+    padding: clamp(28px, 4vw, 44px) 0;
+    display: grid;
+    grid-template-columns: clamp(32px, 4vw, 56px) 1fr;
+    gap: clamp(12px, 2vw, 24px);
+  }
+  .svc.last {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .svc-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .svc-title {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.8vw, 32px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 8px 0 16px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .svc-lede {
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 17px);
+    line-height: 1.55;
+    color: var(--subtle);
+    max-width: 520px;
+    text-wrap: pretty;
+    margin-top: 0;
+  }
+
+  .svc-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 22px 0 24px;
+  }
+  .svc-bullets li {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 8px 0;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .tick-mark {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+</style>

@@ -1,0 +1,120 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(11, 22, 32, 0.35);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+h1,
+h2 {
+  font-feature-settings: "ss01", "ss02", "zero" 0;
+}
+
+/* Editorial display tuning */
+.rm-display {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rm-display-tight {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+/* Page enter animation */
+@keyframes rmfadein {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rmpulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+main.rm-page-anim {
+  animation: rmfadein 340ms ease-out both;
+}
+
+/* Netlify honeypot */
+.hp {
+  position: absolute;
+  left: -5000px;
+}
+
+/* Mobile-vs-desktop nav visibility */
+.rm-mobile-toggle {
+  display: inline-flex;
+}
+.rm-desktop-nav {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .rm-desktop-nav {
+    display: flex !important;
+  }
+  .rm-mobile-toggle {
+    display: none !important;
+  }
+}
+
+/* Footer grid */
+.rm-footer-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 760px) {
+  .rm-footer-grid {
+    grid-template-columns: 1.4fr 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main.rm-page-anim {
+    animation: none;
+  }
+}

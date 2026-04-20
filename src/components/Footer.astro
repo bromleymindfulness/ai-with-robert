@@ -1,0 +1,92 @@
+---
+import Tick from './Tick.astro';
+import { site } from '../site.config';
+
+const siteLinks = site.nav.slice(0, 4);
+const elsewhere = [
+  { label: 'Telegram ↗', href: `https://t.me/${site.contact.telegram.replace('@', '')}` },
+  { label: 'YouTube ↗', href: `https://youtube.com${site.contact.youtube}` },
+  { label: 'RSS ↗', href: '/rss.xml' },
+];
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="rm-footer-grid grid">
+    <div>
+      <div class="mark">Robert<br />Mitchell</div>
+      <Tick>AI Marketing Automation · Training</Tick>
+    </div>
+
+    <div class="cols">
+      <div>
+        <Tick block>Site</Tick>
+        {siteLinks.map((l) => (
+          <a class="flink" href={l.href}>{l.label}</a>
+        ))}
+      </div>
+      <div>
+        <Tick block>Elsewhere</Tick>
+        {elsewhere.map((l) => (
+          <a class="flink" href={l.href}>{l.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="baseline">
+    <span>© {year} R.M.</span>
+    <span>Built in Astro · Netlify</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding: clamp(32px, 6vw, 60px) clamp(20px, 4vw, 56px) 28px;
+    background: var(--paper);
+  }
+  .grid {
+    display: grid;
+    gap: clamp(28px, 5vw, 48px);
+  }
+  .mark {
+    font-family: var(--display);
+    font-size: clamp(32px, 8vw, 48px);
+    line-height: 0.95;
+    letter-spacing: -2px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-content: start;
+  }
+  .cols :global(.tick) {
+    margin-bottom: 14px;
+  }
+  .flink {
+    display: block;
+    padding: 6px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .baseline {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>

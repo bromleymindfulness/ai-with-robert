@@ -1,0 +1,28 @@
+---
+import Tick from './Tick.astro';
+
+interface Props {
+  l: string;
+  r: string;
+}
+const { l, r } = Astro.props;
+---
+<div class="row">
+  <Tick>{l}</Tick>
+  <span class="value">{r}</span>
+</div>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .value {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+  }
+</style>

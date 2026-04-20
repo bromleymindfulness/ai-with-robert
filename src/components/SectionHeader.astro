@@ -1,0 +1,38 @@
+---
+import Tick from './Tick.astro';
+
+interface Props {
+  num: string;
+  label: string;
+  right?: string;
+}
+const { num, label, right } = Astro.props;
+const hasRightSlot = Astro.slots.has('right');
+---
+<div class="sh">
+  <Tick>§ {num} — {label}</Tick>
+  {hasRightSlot ? (
+    <span class="sh-right"><slot name="right" /></span>
+  ) : right ? (
+    <Tick>{right}</Tick>
+  ) : null}
+</div>
+
+<style>
+  .sh {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 18px;
+    margin-bottom: 4px;
+    align-items: baseline;
+  }
+  .sh-right :global(a) {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+</style>

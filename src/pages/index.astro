@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tick from '../components/Tick.astro';
+import SpecRow from '../components/SpecRow.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import NewsletterCapture from '../components/NewsletterCapture.astro';
+import { site } from '../site.config';
+import { getCollection } from 'astro:content';
+
+const upcoming = (await getCollection('classes', ({ data }) => data.status === 'upcoming'))
+  .sort((a, b) => a.data.order - b.data.order);
+const next = upcoming[0];
+
+const posts = (await getCollection('posts'))
+  .sort((a, b) => b.data.order - a.data.order)
+  .slice(0, 3);
+
+const services = [
+  { k: 'A', t: 'Training', d: 'Learn to design, build and ship your own bot team. Small cohorts, live on YouTube.' },
+  { k: 'B', t: 'Automation', d: 'I deploy and operate a team of specialist bots inside your Telegram. Done-for-you.' },
+];
+
+const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+---
+<BaseLayout pageKey="home" screenLabel="01 Home">
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <Tick>Document / 001 / Index</Tick>
+      <Tick>{today}</Tick>
+    </div>
+    <h1 class="h1">{site.hero.headline}</h1>
+    <p class="sub">{site.hero.sub}</p>
+  </section>
+
+  <section class="spec">
+    <SpecRow l="Client" r="You" />
+    <SpecRow l="Fleet" r="20 bots / server" />
+    <SpecRow l="Channel" r="Telegram" />
+    <SpecRow l="Uptime" r="24 / 7" />
+    <SpecRow l="Cost" r="< 1 junior hire" />
+  </section>
+
+  <section class="services">
+    <SectionHeader num="02" label="Services" right="Two streams" />
+    <div class="services-grid">
+      {services.map((s) => (
+        <a class="service-card" href="/services/">
+          <div class="service-top">
+            <Tick color="var(--accent)">— {s.k}</Tick>
+            <Tick>→</Tick>
+          </div>
+          <div class="service-title">{s.t}</div>
+          <div class="service-desc">{s.d}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {next && (
+    <section class="cta">
+      <NewsletterCapture
+        source="home-hero"
+        eyebrow="Next live · YouTube"
+        meta={next.data.dateShort}
+        heading={`${next.data.title}<div class=\"meta\">${next.data.date ?? ''} · ${next.data.duration}</div>`}
+        cta={`${site.hero.ctaLabel} →`}
+      />
+    </section>
+  )}
+
+  <section class="writing">
+    <SectionHeader num="03" label="Writing">
+      <a slot="right" href="/writing/">All →</a>
+    </SectionHeader>
+    {posts.map((p) => (
+      <a class="post" href="/writing/">
+        <Tick color="var(--accent)">{p.data.num}</Tick>
+        <div class="post-title">{p.data.title}</div>
+        <Tick>{p.data.date}</Tick>
+      </a>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: clamp(48px, 9vw, 104px) clamp(20px, 4vw, 56px) clamp(36px, 6vw, 60px);
+  }
+  .hero-eyebrow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: clamp(28px, 5vw, 40px);
+  }
+  .h1 {
+    font-family: var(--display);
+    font-size: clamp(28px, 5.4vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    margin: 0;
+    text-wrap: balance;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .sub {
+    margin-top: clamp(20px, 3vw, 32px);
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.55;
+    color: var(--subtle);
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .spec,
+  .services,
+  .cta,
+  .writing {
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .spec,
+  .services,
+  .cta {
+    padding-bottom: clamp(36px, 6vw, 60px);
+  }
+  .writing {
+    padding-bottom: clamp(40px, 7vw, 72px);
+  }
+
+  .services-grid {
+    display: grid;
+    gap: clamp(14px, 2vw, 20px);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .service-card {
+    display: block;
+    padding: clamp(22px, 3vw, 28px) clamp(20px, 2.5vw, 26px);
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 150ms;
+  }
+  .service-card:hover {
+    border-color: var(--accent);
+  }
+  .service-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .service-title {
+    font-family: var(--display);
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .service-desc {
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--subtle);
+    text-wrap: pretty;
+  }
+
+  :global(.meta) {
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+  }
+
+  .post {
+    display: grid;
+    grid-template-columns: clamp(48px, 7vw, 72px) 1fr auto;
+    gap: clamp(12px, 2vw, 24px);
+    align-items: baseline;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 160ms;
+  }
+  .post:hover {
+    padding-left: 10px;
+  }
+  .post-title {
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 17px);
+    line-height: 1.35;
+    color: var(--ink);
+  }
+</style>

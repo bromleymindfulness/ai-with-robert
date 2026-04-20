@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tick from '../components/Tick.astro';
+import Pulse from '../components/Pulse.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import TextLink from '../components/TextLink.astro';
+import NewsletterCapture from '../components/NewsletterCapture.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('classes');
+const upcoming = all
+  .filter((c) => c.data.status === 'upcoming')
+  .sort((a, b) => a.data.order - b.data.order);
+const past = all
+  .filter((c) => c.data.status === 'past')
+  .sort((a, b) => b.data.order - a.data.order);
+---
+<BaseLayout
+  pageKey="classes"
+  title="Classes — Live on YouTube | Robert Mitchell"
+  description="One class a week. Sixty minutes, live on YouTube, written up afterwards."
+  screenLabel="03 Classes"
+>
+  <section class="intro">
+    <Tick>Document / 003 / Classes</Tick>
+    <h1 class="h1">Live on<br />YouTube.</h1>
+    <p class="sub">
+      One class a week. Sixty minutes, no filler, written up straight after so you can skim or scroll.
+    </p>
+  </section>
+
+  <section class="embed">
+    <div class="tile">
+      <div class="tile-bg" aria-hidden="true"></div>
+      <div class="tile-body">
+        <div class="tile-top">
+          <Pulse color="#ff6159" />
+          <Tick color="rgba(255,255,255,0.7)">YouTube Live · Thu 18:00 GMT</Tick>
+        </div>
+        <div class="tile-title">Embed · Upcoming class preview</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="list">
+    <SectionHeader num="A" label="Upcoming" right={`${upcoming.length} scheduled`} />
+    {upcoming.map((c) => (
+      <div class="row">
+        <Tick color="var(--accent)">{c.data.num}</Tick>
+        <div class="row-body">
+          <div class="row-title">{c.data.title}</div>
+          <div class="row-abstract">{c.data.abstract}</div>
+          <div class="row-meta">
+            <Tick>{c.data.date}</Tick>
+            <Tick>·</Tick>
+            <Tick>{c.data.duration}</Tick>
+          </div>
+        </div>
+        <div class="row-rsvp"><TextLink color="var(--accent)">RSVP →</TextLink></div>
+      </div>
+    ))}
+    <div class="hairline"></div>
+  </section>
+
+  <section class="notify">
+    <NewsletterCapture
+      source="classes-weekly"
+      eyebrow="Never miss one"
+      heading={'Get a calendar invite<br/>every Monday.'}
+      cta="Notify me →"
+    />
+  </section>
+
+  <section class="list">
+    <SectionHeader num="B" label="Archive" right="All past classes →" />
+    {past.map((c) => (
+      <div class="archive-row">
+        <Tick color="var(--accent)">{c.data.num}</Tick>
+        <span class="arch-title">{c.data.title}</span>
+        <Tick>{c.data.dateShort}</Tick>
+        <Tick>▶ {c.data.duration}</Tick>
+      </div>
+    ))}
+    <div class="hairline"></div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: clamp(48px, 8vw, 84px) clamp(20px, 4vw, 56px) clamp(28px, 4vw, 40px);
+  }
+  .intro :global(.tick) {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 5.5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .sub {
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.55;
+    color: var(--subtle);
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .embed {
+    padding: 0 clamp(20px, 4vw, 56px) clamp(36px, 5vw, 56px);
+  }
+  .tile {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .tile-bg {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.03) 0 2px,
+      transparent 2px 14px
+    );
+  }
+  .tile-body {
+    text-align: center;
+    position: relative;
+    padding: 0 24px;
+  }
+  .tile-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .tile-title {
+    font-family: var(--display);
+    font-size: clamp(18px, 2.4vw, 28px);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    text-transform: uppercase;
+    max-width: 520px;
+    text-wrap: balance;
+  }
+
+  .list {
+    padding: 0 clamp(20px, 4vw, 56px) clamp(36px, 5vw, 56px);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: clamp(44px, 6vw, 72px) 1fr auto;
+    gap: clamp(12px, 2vw, 24px);
+    align-items: start;
+    padding: clamp(20px, 3vw, 26px) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .row-title {
+    font-family: var(--display);
+    font-size: clamp(17px, 2vw, 22px);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 10px;
+    text-wrap: balance;
+  }
+  .row-abstract {
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--subtle);
+    max-width: 520px;
+    text-wrap: pretty;
+    margin-bottom: 10px;
+  }
+  .row-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hairline {
+    border-top: 1px solid var(--rule);
+  }
+
+  .notify {
+    padding: 0 clamp(20px, 4vw, 56px) clamp(36px, 5vw, 56px);
+  }
+
+  .archive-row {
+    display: grid;
+    grid-template-columns: clamp(44px, 6vw, 72px) 1fr auto auto;
+    gap: clamp(10px, 2vw, 20px);
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .arch-title {
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tick from '../components/Tick.astro';
+import TextLink from '../components/TextLink.astro';
+---
+<BaseLayout
+  pageKey="contact"
+  title="Thanks — Message received | Robert Mitchell"
+  description="Thanks — your message is in."
+>
+  <section class="wrap">
+    <Tick>Document / 00T / Thanks</Tick>
+    <h1 class="h1">Message received.<br /><span class="accent">Reply on the way.</span></h1>
+    <p class="sub">
+      I read every one. You'll hear back within a business day — usually faster.
+    </p>
+    <div class="links">
+      <TextLink color="var(--accent)" href="/">← Back to the index</TextLink>
+      <TextLink color="var(--accent)" href="/writing/">Read something while you wait →</TextLink>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .wrap {
+    padding: clamp(80px, 12vw, 140px) clamp(20px, 4vw, 56px) clamp(80px, 12vw, 140px);
+    max-width: 720px;
+  }
+  .wrap :global(.tick):first-child {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 5.5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .accent {
+    color: var(--accent);
+  }
+  .sub {
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.55;
+    color: var(--subtle);
+    max-width: 520px;
+    text-wrap: pretty;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+</style>

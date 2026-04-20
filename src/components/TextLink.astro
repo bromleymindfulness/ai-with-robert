@@ -1,0 +1,27 @@
+---
+interface Props {
+  href?: string;
+  color?: string;
+  class?: string;
+}
+const { href = '#', color = 'var(--ink)', class: className } = Astro.props;
+---
+<a href={href} class:list={["tl", className]} style={`--tl-color: ${color}`}>
+  <slot />
+</a>
+
+<style>
+  .tl {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--tl-color, var(--ink));
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+</style>

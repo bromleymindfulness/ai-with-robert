@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tick from '../components/Tick.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SpecRow from '../components/SpecRow.astro';
+---
+<BaseLayout
+  pageKey="about"
+  title="About — Robert Mitchell | AI Marketing Automation & Training"
+  description="A small fleet of twenty chatbots on a Nanoclaw server, running marketing over Telegram."
+  screenLabel="05 About"
+>
+  <section class="intro">
+    <Tick>Document / 005 / About</Tick>
+    <h1 class="h1">Robert Mitchell,<br />in plain prose.</h1>
+  </section>
+
+  <section class="prose">
+    <div class="prose-body">
+      <p>
+        I run a small fleet of twenty chatbots on a Nanoclaw server. They talk
+        to each other, and they talk to me, over Telegram. Together they do
+        everything a small marketing team would do — only twenty-four hours a
+        day, and without meetings.
+      </p>
+      <p>
+        I teach other people to build the same thing. Every Thursday on
+        YouTube, live. Afterwards I write it up so you can skim it on your
+        phone.
+      </p>
+      <p>
+        I work with a handful of clients at a time. If that's you, we'll
+        mostly meet in Telegram.
+      </p>
+    </div>
+
+    <div class="portrait-wrap">
+      <div class="portrait">
+        <div class="portrait-bg" aria-hidden="true"></div>
+        <div class="portrait-label"><Tick>Portrait · replace</Tick></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fleet">
+    <SectionHeader num="A" label="Fleet" right="Nanoclaw · Apr 2026" />
+    <SpecRow l="Server" r="Nanoclaw · 1U" />
+    <SpecRow l="Bot count" r="20, active" />
+    <SpecRow l="Channels" r="Telegram" />
+    <SpecRow l="Specialisms" r="Content · Ads · SEO · Email · Analytics" />
+    <SpecRow l="Replication" r="Tomorrow, if needed" />
+    <SpecRow l="Uptime target" r="99.5%" />
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: clamp(48px, 8vw, 84px) clamp(20px, 4vw, 56px) clamp(28px, 4vw, 40px);
+  }
+  .intro :global(.tick) {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 5.5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .prose {
+    padding: clamp(28px, 4vw, 40px) clamp(20px, 4vw, 56px) clamp(36px, 6vw, 60px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(24px, 3vw, 40px);
+    border-top: 1px solid var(--rule);
+  }
+  .prose-body {
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 17px);
+    line-height: 1.65;
+    color: var(--subtle);
+    text-wrap: pretty;
+  }
+  .prose-body p:first-child {
+    margin-top: 0;
+  }
+
+  .portrait {
+    aspect-ratio: 4 / 5;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait-bg {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(11, 22, 32, 0.05) 0 1px,
+      transparent 1px 12px
+    );
+  }
+  .portrait-label {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .fleet {
+    padding: 0 clamp(20px, 4vw, 56px) clamp(40px, 7vw, 72px);
+  }
+</style>

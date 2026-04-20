@@ -1,0 +1,17 @@
+---
+interface Props {
+  padding?: string;
+  class?: string;
+}
+const { padding = 'clamp(22px, 4vw, 32px)', class: className } = Astro.props;
+---
+<div class:list={["invert", className]} style={`padding: ${padding}`}>
+  <slot />
+</div>
+
+<style>
+  .invert {
+    background: var(--ink);
+    color: var(--paper);
+  }
+</style>

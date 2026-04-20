@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tick from '../components/Tick.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SpecRow from '../components/SpecRow.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../site.config';
+---
+<BaseLayout
+  pageKey="contact"
+  title="Contact — Start a conversation | Robert Mitchell"
+  description="Telegram first, email second. Reply within one business day."
+  screenLabel="06 Contact"
+>
+  <section class="intro">
+    <Tick>Document / 006 / Contact</Tick>
+    <h1 class="h1">Start a<br />conversation.</h1>
+    <p class="sub">
+      The fastest route is Telegram. The form works too — I reply within one business day.
+    </p>
+  </section>
+
+  <section class="grid">
+    <div class="col">
+      <SectionHeader num="A" label="Channels" />
+      <SpecRow l="Telegram" r={site.contact.telegram} />
+      <SpecRow l="Email" r={site.contact.email} />
+      <SpecRow l="YouTube" r={site.contact.youtube} />
+      <SpecRow l="Location" r={site.contact.location} />
+    </div>
+
+    <div class="col">
+      <SectionHeader num="B" label="Form" />
+      <ContactForm />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding: clamp(48px, 8vw, 84px) clamp(20px, 4vw, 56px) clamp(28px, 4vw, 40px);
+  }
+  .intro :global(.tick) {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 5.5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    margin: 0;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .sub {
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.6vw, 18px);
+    line-height: 1.55;
+    color: var(--subtle);
+    max-width: 520px;
+    text-wrap: pretty;
+  }
+
+  .grid {
+    padding: 0 clamp(20px, 4vw, 56px) clamp(40px, 7vw, 72px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(24px, 3vw, 48px);
+  }
+  .col {
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+</style>

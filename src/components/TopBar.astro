@@ -1,0 +1,189 @@
+---
+import { site } from '../site.config';
+import Pulse from './Pulse.astro';
+
+interface Props {
+  active?: string;
+}
+const { active = 'home' } = Astro.props;
+const live = site.live.on;
+---
+<div class="topbar">
+  {live && (
+    <a class="livebar" href={site.live.youtubeUrl} target="_blank" rel="noopener">
+      <Pulse color="#ff6159" />
+      <span class="live-title">Live on YouTube · "{site.live.classTitle}"</span>
+      <span class="live-cta">Watch →</span>
+    </a>
+  )}
+
+  <div class="bar">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true"></span>
+      R. Mitchell
+    </a>
+
+    <nav class="rm-desktop-nav nav">
+      {site.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={["nav-link", { active: active === item.key }]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <button
+      class="rm-mobile-toggle mtoggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="rm-mobile-menu"
+    >
+      Menu
+    </button>
+  </div>
+
+  <div id="rm-mobile-menu" class="mobile-menu" hidden>
+    {site.nav.map((item, i) => (
+      <a
+        href={item.href}
+        class:list={["mobile-link", { active: active === item.key }]}
+      >
+        <span>{item.label}</span>
+        <span class="mobile-num">0{i + 1}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .livebar {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 7px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .livebar .live-cta {
+    margin-left: auto;
+    opacity: 0.7;
+  }
+
+  .bar {
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-mark {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .nav {
+    gap: 26px;
+  }
+  .nav-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--ink);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  .nav-link.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .mtoggle {
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 7px 11px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .mobile-menu {
+    padding: 6px 20px 18px;
+    border-top: 1px solid var(--rule);
+  }
+  .mobile-menu[hidden] {
+    display: none;
+  }
+  .mobile-link {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .mobile-link.active {
+    color: var(--accent);
+  }
+  .mobile-num {
+    font-size: 10px;
+    opacity: 0.5;
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.rm-mobile-toggle');
+  const menu = document.getElementById('rm-mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      const next = !isOpen;
+      toggle.setAttribute('aria-expanded', String(next));
+      toggle.textContent = next ? 'Close' : 'Menu';
+      if (next) {
+        menu.removeAttribute('hidden');
+      } else {
+        menu.setAttribute('hidden', '');
+      }
+    });
+  }
+</script>

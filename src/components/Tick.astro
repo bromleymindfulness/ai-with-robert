@@ -1,0 +1,33 @@
+---
+interface Props {
+  color?: string;
+  size?: number;
+  block?: boolean;
+  class?: string;
+  style?: string;
+}
+const { color, size = 10, block = false, class: className, style: extraStyle } = Astro.props;
+
+const styleVars = [
+  `--tick-color: ${color ?? 'var(--muted)'}`,
+  `--tick-size: ${size}px`,
+  block ? 'display: block' : null,
+  extraStyle ?? null,
+]
+  .filter(Boolean)
+  .join('; ');
+---
+<span class:list={["tick", className]} style={styleVars}>
+  <slot />
+</span>
+
+<style>
+  .tick {
+    font-family: var(--mono);
+    font-size: var(--tick-size, 10px);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--tick-color, var(--muted));
+    font-weight: 500;
+  }
+</style>

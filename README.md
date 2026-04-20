@@ -119,6 +119,13 @@ Both redirect to `/thanks/` on submit. Submissions show up under **Netlify site 
 3. First deploy takes ~60 seconds. Form detection happens automatically during the build.
 4. Point your custom domain at the Netlify site (or use the `*.netlify.app` URL for now).
 
+## Crawling is disabled
+
+The site is currently set to **noindex** — both via `public/robots.txt` (`Disallow: /`) and a `<meta name="robots" content="noindex, nofollow">` tag in `BaseLayout.astro`. To allow crawling once you're ready to go public:
+
+1. Replace `public/robots.txt` contents with `User-agent: *` / `Allow: /` and a sitemap line
+2. Remove the two robots `<meta>` tags from `src/layouts/BaseLayout.astro`
+
 ## Prototype reference
 
 `prototype.zip` is the original Claude Design export. It's the visual / copy source of truth. Not built, not shipped, not imported anywhere — keep it for reference or drop it when you no longer need it.
